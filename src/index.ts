@@ -1,3 +1,6 @@
+'use strict';
+
+import './style.css';
 import { greetUser } from '$utils/greet';
 
 window.Webflow ||= [];
