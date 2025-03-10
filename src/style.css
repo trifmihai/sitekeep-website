@@ -1,3 +1,53 @@
-html {
-  color: red;
+.hero_badge::before {
+  content: '';
+  position: absolute;
+
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+
+  background: linear-gradient(to bottom, #b2d9ff, #66b3ff);
+}
+
+.button-primary::before {
+  content: '';
+  position: absolute;
+
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+
+  background: linear-gradient(to bottom, #b2d9ff, #3776d4);
+}
+
+.button.is-pricing::before {
+  content: '';
+  position: absolute;
+
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+
+  background: linear-gradient(to bottom, #b2d9ff, #3776d4);
+}
+
+.navbar-wrapper::before {
+  content: '';
+  position: absolute;
+
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+
+  background: linear-gradient(to top, #e8e8e8, #f7f7f7);
+}
+
+.plan_step-3-wrapper {
+  overflow-y: clip;
+}
+
+.blur-component {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  mask-image: linear-gradient(180deg, #0000 0%, #000 30%);
 }
