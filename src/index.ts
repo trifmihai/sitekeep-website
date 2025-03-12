@@ -11,7 +11,7 @@ import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 document.addEventListener('DOMContentLoaded', () => {
   // Define the layout
   const layout = new Layout({
-    fit: Fit.FitWidth, // Change to: Fit.Contain, or Cover
+    fit: Fit.Contain, // Change to: Fit.Contain, or Cover
     alignment: Alignment.Center,
   });
 
