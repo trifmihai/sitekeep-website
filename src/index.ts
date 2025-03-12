@@ -3,24 +3,20 @@
 import './style.css';
 
 import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
-
 // ==============================
 // ? RIVE
 // ==============================
-
 // document.addEventListener('DOMContentLoaded', () => {
 //   // Define the layout
 //   const layout = new Layout({
-//     fit: Fit.Contain, // Change to: Fit.Contain, or Cover
+//     fit: Fit.Cover, // Change to: Fit.Contain, or Cover
 //     alignment: Alignment.Center,
 //   });
-
 //   // HTML Canvas element to render to
 //   const riveCanvas = document.getElementById('benefit-1');
-
 //   // Initialize the Rive instance
 //   const riveInstance = new Rive({
-//     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0d5b6db10f624a4b60b47_benefit-16.riv',
+//     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0eb5cebc37844d2e4beff_benefit-18.riv',
 //     canvas: riveCanvas,
 //     autoplay: true,
 //     artboard: 'automate-reports',
@@ -31,43 +27,45 @@ import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 //       riveInstance.resizeDrawingSurfaceToCanvas(); // ensures crisp rendering
 //     },
 //   });
-
 //   window.addEventListener('resize', () => {
 //     riveInstance.resizeDrawingSurfaceToCanvas();
 //   });
 // });
+import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. DEVICE DETECTION
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  // 2. SELECT STATE MACHINE BASED ON DEVICE
-  const stateMachineName = isMobile ? 'mobile-state-machine' : 'desktop-state-machine';
-
-  // 3. DEFINE LAYOUT
   const layout = new Layout({
-    fit: Fit.Contain, // Use Cover if you prefer
+    fit: Fit.Contain,
     alignment: Alignment.Center,
   });
 
-  // 4. SELECT YOUR CANVAS
   const riveCanvas = document.getElementById('benefit-1');
 
-  // 5. INIT RIVE INSTANCE WITH THE CORRECT STATE MACHINE
   const riveInstance = new Rive({
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0e85d96516cb585805af6_benefit-17.riv',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0f4218af0c805617a657e_benefit-1-v10.riv',
     canvas: riveCanvas,
     autoplay: true,
     artboard: 'automate-reports',
-    stateMachines: stateMachineName, // ✅ dynamic state machine based on device
+    stateMachines: 'state-machine-1',
     layout: layout,
+
     onLoad: () => {
-      console.log('Rive animation loaded using WebGL2!');
-      riveInstance.resizeDrawingSurfaceToCanvas(); // ensures crisp rendering
+      riveInstance.resizeDrawingSurfaceToCanvas();
+
+      const inputs = riveInstance.stateMachineInputs('state-machine-1');
+      const cardHoverInput = inputs.find((input) => input.name === 'card_hover');
+
+      if (!cardHoverInput) return;
+
+      function checkCardHover() {
+        riveCanvas.style.cursor = cardHoverInput.value === true ? 'pointer' : 'default';
+        requestAnimationFrame(checkCardHover);
+      }
+
+      checkCardHover();
     },
   });
 
-  // 6. HANDLE RESIZING
   window.addEventListener('resize', () => {
     riveInstance.resizeDrawingSurfaceToCanvas();
   });
