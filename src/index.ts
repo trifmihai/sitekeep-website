@@ -6,6 +6,83 @@ import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 // ==============================
 // ? RIVE
 // ==============================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const layout = new Layout({
+    fit: Fit.Contain,
+    alignment: Alignment.Center,
+  });
+
+  // === First Animation ===
+  initRiveAnimation({
+    canvasId: 'benefit-1',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d1a1922f51259652e546c8_1-benefit-v11.riv',
+    artboard: 'benefit-1',
+    stateMachine: 'state-machine-1',
+    hoverInputName: 'card_hover',
+    cursorOnHover: 'pointer',
+    cursorOnExit: 'default',
+  });
+
+  // === Second Animation ===
+  initRiveAnimation({
+    canvasId: 'benefit-4',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d1a73a409cf6e7694b6389_4-benefit-v2.riv',
+    artboard: 'benefit-4',
+    stateMachine: 'state-machine-1',
+    hoverInputName: 'cardHovered',
+    cursorOnHover: 'grab', // Different cursor on hover
+    cursorOnExit: 'default',
+  });
+
+  // === Reusable Init Function ===
+  function initRiveAnimation({
+    canvasId,
+    src,
+    artboard,
+    stateMachine,
+    hoverInputName,
+    cursorOnHover,
+    cursorOnExit,
+  }) {
+    const riveCanvas = document.getElementById(canvasId);
+
+    if (!riveCanvas) {
+      console.warn(`Canvas element with id "${canvasId}" not found.`);
+      return;
+    }
+
+    const riveInstance = new Rive({
+      src: src,
+      canvas: riveCanvas,
+      autoplay: true,
+      artboard: artboard,
+      stateMachines: stateMachine,
+      layout: layout,
+
+      onLoad: () => {
+        riveInstance.resizeDrawingSurfaceToCanvas();
+
+        const inputs = riveInstance.stateMachineInputs(stateMachine);
+        const hoverInput = inputs.find((input) => input.name === hoverInputName);
+
+        if (!hoverInput) return;
+
+        function checkCardHover() {
+          riveCanvas.style.cursor = hoverInput.value === true ? cursorOnHover : cursorOnExit;
+          requestAnimationFrame(checkCardHover);
+        }
+
+        checkCardHover();
+      },
+    });
+
+    window.addEventListener('resize', () => {
+      riveInstance.resizeDrawingSurfaceToCanvas();
+    });
+  }
+});
+
 // document.addEventListener('DOMContentLoaded', () => {
 //   // Define the layout
 //   const layout = new Layout({
@@ -31,45 +108,44 @@ import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 //     riveInstance.resizeDrawingSurfaceToCanvas();
 //   });
 // });
-import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const layout = new Layout({
-    fit: Fit.Contain,
-    alignment: Alignment.Center,
-  });
+// document.addEventListener('DOMContentLoaded', () => {
+//   const layout = new Layout({
+//     fit: Fit.Contain,
+//     alignment: Alignment.Center,
+//   });
 
-  const riveCanvas = document.getElementById('benefit-1');
+//   const riveCanvas = document.getElementById('benefit-1');
 
-  const riveInstance = new Rive({
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0f4218af0c805617a657e_benefit-1-v10.riv',
-    canvas: riveCanvas,
-    autoplay: true,
-    artboard: 'automate-reports',
-    stateMachines: 'state-machine-1',
-    layout: layout,
+//   const riveInstance = new Rive({
+//     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0f4218af0c805617a657e_benefit-1-v10.riv',
+//     canvas: riveCanvas,
+//     autoplay: true,
+//     artboard: 'automate-reports',
+//     stateMachines: 'state-machine-1',
+//     layout: layout,
 
-    onLoad: () => {
-      riveInstance.resizeDrawingSurfaceToCanvas();
+//     onLoad: () => {
+//       riveInstance.resizeDrawingSurfaceToCanvas();
 
-      const inputs = riveInstance.stateMachineInputs('state-machine-1');
-      const cardHoverInput = inputs.find((input) => input.name === 'card_hover');
+//       const inputs = riveInstance.stateMachineInputs('state-machine-1');
+//       const cardHoverInput = inputs.find((input) => input.name === 'card_hover');
 
-      if (!cardHoverInput) return;
+//       if (!cardHoverInput) return;
 
-      function checkCardHover() {
-        riveCanvas.style.cursor = cardHoverInput.value === true ? 'pointer' : 'default';
-        requestAnimationFrame(checkCardHover);
-      }
+//       function checkCardHover() {
+//         riveCanvas.style.cursor = cardHoverInput.value === true ? 'pointer' : 'default';
+//         requestAnimationFrame(checkCardHover);
+//       }
 
-      checkCardHover();
-    },
-  });
+//       checkCardHover();
+//     },
+//   });
 
-  window.addEventListener('resize', () => {
-    riveInstance.resizeDrawingSurfaceToCanvas();
-  });
-});
+//   window.addEventListener('resize', () => {
+//     riveInstance.resizeDrawingSurfaceToCanvas();
+//   });
+// });
 
 // ==============================
 // ? COPY TO CLIPBOARD
