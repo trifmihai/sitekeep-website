@@ -2,6 +2,41 @@
 
 import './style.css';
 
+import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
+
+// ==============================
+// ? RIVE
+// ==============================
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Define the layout
+  const layout = new Layout({
+    fit: Fit.FitWidth, // Change to: Fit.Contain, or Cover
+    alignment: Alignment.Center,
+  });
+
+  // HTML Canvas element to render to
+  const riveCanvas = document.getElementById('benefit-1');
+
+  // Initialize the Rive instance
+  const riveInstance = new Rive({
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0d5b6db10f624a4b60b47_benefit-16.riv',
+    canvas: riveCanvas,
+    autoplay: true,
+    artboard: 'automate-reports',
+    stateMachines: 'state-machine-1',
+    layout: layout,
+    onLoad: () => {
+      console.log('Rive animation loaded using WebGL2!');
+      riveInstance.resizeDrawingSurfaceToCanvas(); // ensures crisp rendering
+    },
+  });
+
+  window.addEventListener('resize', () => {
+    riveInstance.resizeDrawingSurfaceToCanvas();
+  });
+});
+
 // ==============================
 // ? COPY TO CLIPBOARD
 // ==============================

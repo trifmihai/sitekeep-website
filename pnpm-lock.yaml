@@ -11,6 +11,15 @@ importers:
       '@finsweet/ts-utils':
         specifier: ^0.40.0
         version: 0.40.0
+      '@rive-app/canvas':
+        specifier: ^2.26.4
+        version: 2.26.4
+      '@rive-app/webgl2':
+        specifier: ^2.26.4
+        version: 2.26.4
+      rive-js:
+        specifier: ^0.7.33
+        version: 0.7.33
     devDependencies:
       '@changesets/changelog-git':
         specifier: ^0.2.0
@@ -369,6 +378,12 @@ packages:
     resolution: {integrity: sha512-Jii3aBg+CEDpgnuDxEp/h7BimHcUTDlpEtce89xEumlJ5ef2hqepZ+PWp1DDpYC/VO9fmWVI1IlEaoI5fK9FXQ==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@rive-app/canvas@2.26.4':
+    resolution: {integrity: sha512-a9bSM2Hwe2K5hcRMC0dDfR4ygDgrJhVrEtv2L+QYS8bmjI2V2IgZsocKvtc/gW7Gt+R7NIBNgcy/vW1hl6KzFg==}
+
+  '@rive-app/webgl2@2.26.4':
+    resolution: {integrity: sha512-zOFaxVlt5sBw+B4mGfqDhfvBHIfXKgFCVOdhVnxyLlFAy9eeuO40qHKYvZeJrrp3XXg5CrV58Akmj/TvHOCb7w==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -940,6 +955,9 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  rive-js@0.7.33:
+    resolution: {integrity: sha512-u/dqr4XYx1TOo5xtSCN+6YvUKYU88ii6xWP82Xz15O4OqF3GM1Pa4WXx4dEOa6QG6IqbM0JcfsAhae7TjVZf6Q==}
+
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
@@ -1378,6 +1396,10 @@ snapshots:
   '@playwright/test@1.50.1':
     dependencies:
       playwright: 1.50.1
+
+  '@rive-app/canvas@2.26.4': {}
+
+  '@rive-app/webgl2@2.26.4': {}
 
   '@types/estree@1.0.6': {}
 
@@ -1953,6 +1975,8 @@ snapshots:
   resolve-from@5.0.0: {}
 
   reusify@1.0.4: {}
+
+  rive-js@0.7.33: {}
 
   run-parallel@1.2.0:
     dependencies:
