@@ -217,7 +217,3 @@ html {
     center / contain no-repeat;
   pointer-events: none;
 } */
-
-.canvas_wrapper {
-  min-height: 350px;
-}
