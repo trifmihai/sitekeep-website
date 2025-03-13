@@ -8,11 +8,6 @@ import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
 // ==============================
 
 document.addEventListener('DOMContentLoaded', () => {
-  const layout = new Layout({
-    fit: Fit.Contain,
-    alignment: Alignment.Center,
-  });
-
   // === First Animation ===
   initRiveAnimation({
     canvasId: 'benefit-1',
@@ -31,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     artboard: 'benefit-4',
     stateMachine: 'state-machine-1',
     hoverInputName: 'cardHovered',
-    cursorOnHover: 'grab', // Different cursor on hover
+    cursorOnHover: 'grab',
     cursorOnExit: 'default',
   });
 
@@ -47,18 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }) {
     const riveCanvas = document.getElementById(canvasId);
 
-    if (!riveCanvas) {
-      console.warn(`Canvas element with id "${canvasId}" not found.`);
-      return;
-    }
+    if (!riveCanvas) return;
+
+    const layout = new Layout({
+      fit: Fit.Contain,
+      alignment: Alignment.Center,
+    });
 
     const riveInstance = new Rive({
-      src: src,
+      src,
       canvas: riveCanvas,
       autoplay: true,
-      artboard: artboard,
+      artboard,
       stateMachines: stateMachine,
-      layout: layout,
+      layout,
 
       onLoad: () => {
         riveInstance.resizeDrawingSurfaceToCanvas();
@@ -68,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!hoverInput) return;
 
-        function checkCardHover() {
+        const checkCardHover = () => {
           riveCanvas.style.cursor = hoverInput.value === true ? cursorOnHover : cursorOnExit;
           requestAnimationFrame(checkCardHover);
-        }
+        };
 
         checkCardHover();
       },
