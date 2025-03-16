@@ -110,6 +110,7 @@ function initRiveAnimation({
   cursorOnHover = 'pointer',
   cursorOnExit = 'default',
   autoplay = true,
+  isTouchScrollEnabled = true,
   onRiveEvent = null, // Optional: custom event handler
 }) {
   const canvas = document.getElementById(id);
@@ -131,6 +132,7 @@ function initRiveAnimation({
     stateMachines: stateMachine,
     layout,
     autoplay,
+    isTouchScrollEnabled: true,
     automaticallyHandleEvents: true,
 
     onLoad: () => {
