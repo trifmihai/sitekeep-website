@@ -2,147 +2,228 @@
 
 import './style.css';
 
-import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
+import { Alignment, EventType, Fit, Layout, Rive, RiveEventType } from '@rive-app/webgl2';
 // ==============================
 // ? RIVE
 // ==============================
 
-document.addEventListener('DOMContentLoaded', () => {
-  // === First Animation ===
-  initRiveAnimation({
-    canvasId: 'benefit-1',
+// Add more configurations here for future animations
+const animationsConfig = [
+  {
+    id: 'benefit-1',
     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d1a1922f51259652e546c8_1-benefit-v11.riv',
     artboard: 'benefit-1',
     stateMachine: 'state-machine-1',
-    hoverInputName: 'card_hover',
+    hoverInputNames: ['card_hover'],
     cursorOnHover: 'pointer',
     cursorOnExit: 'default',
-  });
-
-  // === Second Animation ===
-  initRiveAnimation({
-    canvasId: 'benefit-4',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d1a73a409cf6e7694b6389_4-benefit-v2.riv',
+  },
+  {
+    id: 'benefit-2',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d4232fa1b8c8d4802d6882_2-benefit-v11.riv',
+    artboard: 'benefit-2',
+    stateMachine: 'state-machine-1',
+    hoverInputNames: ['hoverSecurity', 'hoverPerformance'],
+    cursorOnHover: 'pointer',
+    cursorOnExit: 'default',
+    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+  },
+  {
+    id: 'benefit-3',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d62616bf79b5d0a4464dd8_3-benefit-v4.riv',
+    artboard: 'benefit-3',
+    stateMachine: 'state-machine-1',
+    hoverInputNames: ['hover'],
+    cursorOnHover: 'pointer',
+    cursorOnExit: 'default',
+    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+  },
+  {
+    id: 'benefit-4',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d6204c83c0ed0c6c3ee7a3_4-benefit-v3.riv',
     artboard: 'benefit-4',
     stateMachine: 'state-machine-1',
-    hoverInputName: 'cardHovered',
+    hoverInputNames: ['cardHovered'],
     cursorOnHover: 'grab',
     cursorOnExit: 'default',
-  });
+    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+  },
+  {
+    id: 'benefit-5',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d6232dae483e2d92b662fc_5-benefit-v3.riv',
+    artboard: 'benefit-5',
+    stateMachine: 'state-machine-1',
+    hoverInputNames: ['hoverIcon'],
+    cursorOnHover: 'pointer',
+    cursorOnExit: 'default',
+    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+  },
+  {
+    id: 'core-logo',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d31daf1c277d5cc3d641c9_core-logo-v6.riv',
+    artboard: 'core-logo',
+    stateMachine: 'state-machine-1',
+    hoverInputNames: ['cardHovered'], // Optional hover detection (if needed)
+    cursorOnHover: 'grab',
+    cursorOnExit: 'default',
+    autoplay: true,
+  },
+  // Add more configs here 👇
+  // {
+  //   id: 'benefit-4',
+  //   src: '...',
+  //   ...
+  // }
+];
 
-  // === Reusable Init Function ===
-  function initRiveAnimation({
-    canvasId,
-    src,
-    artboard,
-    stateMachine,
-    hoverInputName,
-    cursorOnHover,
-    cursorOnExit,
-  }) {
-    const riveCanvas = document.getElementById(canvasId);
+// Store all Rive instances for access later (events, triggers, etc.)
+const riveInstances = {};
 
-    if (!riveCanvas) return;
+// ==============================
+// ? INIT ALL ANIMATIONS
+// ==============================
 
-    const layout = new Layout({
-      fit: Fit.Contain,
-      alignment: Alignment.Center,
-    });
-
-    const riveInstance = new Rive({
-      src,
-      canvas: riveCanvas,
-      autoplay: true,
-      artboard,
-      stateMachines: stateMachine,
-      layout,
-
-      onLoad: () => {
-        riveInstance.resizeDrawingSurfaceToCanvas();
-
-        const inputs = riveInstance.stateMachineInputs(stateMachine);
-        const hoverInput = inputs.find((input) => input.name === hoverInputName);
-
-        if (!hoverInput) return;
-
-        const checkCardHover = () => {
-          riveCanvas.style.cursor = hoverInput.value === true ? cursorOnHover : cursorOnExit;
-          requestAnimationFrame(checkCardHover);
-        };
-
-        checkCardHover();
-      },
-    });
-
-    window.addEventListener('resize', () => {
-      riveInstance.resizeDrawingSurfaceToCanvas();
-    });
-  }
+animationsConfig.forEach((config) => {
+  initRiveAnimation(config);
 });
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   // Define the layout
-//   const layout = new Layout({
-//     fit: Fit.Cover, // Change to: Fit.Contain, or Cover
-//     alignment: Alignment.Center,
-//   });
-//   // HTML Canvas element to render to
-//   const riveCanvas = document.getElementById('benefit-1');
-//   // Initialize the Rive instance
-//   const riveInstance = new Rive({
-//     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0eb5cebc37844d2e4beff_benefit-18.riv',
-//     canvas: riveCanvas,
-//     autoplay: true,
-//     artboard: 'automate-reports',
-//     stateMachines: 'state-machine-1',
-//     layout: layout,
-//     onLoad: () => {
-//       console.log('Rive animation loaded using WebGL2!');
-//       riveInstance.resizeDrawingSurfaceToCanvas(); // ensures crisp rendering
-//     },
-//   });
-//   window.addEventListener('resize', () => {
-//     riveInstance.resizeDrawingSurfaceToCanvas();
-//   });
-// });
+// ==============================
+// ? HANDLE WINDOW RESIZE FOR ALL
+// ==============================
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   const layout = new Layout({
-//     fit: Fit.Contain,
-//     alignment: Alignment.Center,
-//   });
+window.addEventListener('resize', () => {
+  Object.values(riveInstances).forEach((instance) => {
+    instance.resizeDrawingSurfaceToCanvas();
+  });
+});
 
-//   const riveCanvas = document.getElementById('benefit-1');
+// ==============================
+// ? REUSABLE INIT FUNCTION
+// ==============================
 
-//   const riveInstance = new Rive({
-//     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d0f4218af0c805617a657e_benefit-1-v10.riv',
-//     canvas: riveCanvas,
-//     autoplay: true,
-//     artboard: 'automate-reports',
-//     stateMachines: 'state-machine-1',
-//     layout: layout,
+function initRiveAnimation({
+  id,
+  src,
+  artboard,
+  stateMachine,
+  hoverInputNames = [],
+  cursorOnHover = 'pointer',
+  cursorOnExit = 'default',
+  autoplay = true,
+  onRiveEvent = null, // Optional: custom event handler
+}) {
+  const canvas = document.getElementById(id);
 
-//     onLoad: () => {
-//       riveInstance.resizeDrawingSurfaceToCanvas();
+  if (!canvas) {
+    // console.warn(`❗️ No canvas element found with id: ${id}`);
+    return;
+  }
 
-//       const inputs = riveInstance.stateMachineInputs('state-machine-1');
-//       const cardHoverInput = inputs.find((input) => input.name === 'card_hover');
+  const layout = new Layout({
+    fit: Fit.Contain,
+    alignment: Alignment.Center,
+  });
 
-//       if (!cardHoverInput) return;
+  const riveInstance = new Rive({
+    canvas,
+    src,
+    artboard,
+    stateMachines: stateMachine,
+    layout,
+    autoplay,
+    automaticallyHandleEvents: true,
 
-//       function checkCardHover() {
-//         riveCanvas.style.cursor = cardHoverInput.value === true ? 'pointer' : 'default';
-//         requestAnimationFrame(checkCardHover);
-//       }
+    onLoad: () => {
+      riveInstance.resizeDrawingSurfaceToCanvas();
+      // console.log(`✅ ${id} loaded!`);
 
-//       checkCardHover();
-//     },
-//   });
+      // Hover handling (if hover inputs are provided)
+      if (hoverInputNames.length > 0) {
+        handleHoverInputs({
+          riveInstance,
+          canvasElement: canvas,
+          stateMachine,
+          hoverInputNames,
+          cursorOnHover,
+          cursorOnExit,
+        });
+      }
+    },
+  });
 
-//   window.addEventListener('resize', () => {
-//     riveInstance.resizeDrawingSurfaceToCanvas();
-//   });
-// });
+  // Handle Rive events (if an event handler is provided)
+  if (onRiveEvent) {
+    riveInstance.on(EventType.RiveEvent, onRiveEvent);
+  }
+
+  // Save the instance for later use (event triggers, resizing, etc.)
+  riveInstances[id] = riveInstance;
+}
+
+// ==============================
+// ? HOVER HANDLER FUNCTION
+// ==============================
+
+function handleHoverInputs({
+  riveInstance,
+  canvasElement,
+  stateMachine,
+  hoverInputNames = [],
+  cursorOnHover = 'pointer',
+  cursorOnExit = 'default',
+}) {
+  const inputs = riveInstance.stateMachineInputs(stateMachine);
+
+  const hoverInputs = hoverInputNames
+    .map((name) => inputs.find((input) => input.name === name))
+    .filter(Boolean);
+
+  if (hoverInputs.length === 0) {
+    // console.warn(`❗️ No hover inputs found for ${canvasElement.id}`);
+    return;
+  }
+
+  const checkHoverState = () => {
+    const isHovering = hoverInputs.some((input) => input.value === true);
+    canvasElement.style.cursor = isHovering ? cursorOnHover : cursorOnExit;
+
+    requestAnimationFrame(checkHoverState);
+  };
+
+  checkHoverState();
+}
+
+// ==============================
+// ? CUSTOM EVENT HANDLER: BENEFIT-2
+// ==============================
+
+function handleBenefit2Event(riveEvent) {
+  const eventName = riveEvent.data.name;
+  const { properties } = riveEvent.data;
+
+  // console.log(`🔥 Event received from benefit-2: ${eventName}`, properties);
+
+  if (eventName === 'securityComplete' || eventName === 'iconPerformanceComplete') {
+    // console.log('✅ Event matched, triggering core-logo animation');
+
+    const coreLogoInstance = riveInstances['core-logo'];
+
+    if (!coreLogoInstance) {
+      // console.warn('❗️ core-logo instance not found');
+      return;
+    }
+
+    const coreInputs = coreLogoInstance.stateMachineInputs('state-machine-1');
+    const triggerInput = coreInputs.find((input) => input.name === 'startAnimation');
+
+    if (triggerInput) {
+      triggerInput.fire();
+      // console.log('✅ Fired "startAnimation" trigger on core-logo!');
+    } else {
+      // console.warn('❗️ No trigger input named "startAnimation" found on core-logo');
+    }
+  }
+}
 
 // ==============================
 // ? COPY TO CLIPBOARD
@@ -155,14 +236,24 @@ const clipDefaultIcon = document.querySelector('.footer_clipboard-icon.is-defaul
 const clipSuccessIcon = document.querySelector('.footer_clipboard-icon.is-copied');
 
 (function () {
+  if (!copyText || !buttonState || !copyWrapper || !clipDefaultIcon || !clipSuccessIcon) {
+    return; // Exit if any element is missing
+  }
+
   // Function to handle the copy action
-  const handleCopy = (e: Event) => {
+  const handleCopy = (e) => {
     e.preventDefault();
     const text = copyText.textContent;
     if (text !== null) {
-      navigator.clipboard.writeText(text);
-      updateUIOnCopy();
-      setTimeout(resetUI, 10000);
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          updateUIOnCopy();
+          setTimeout(resetUI, 10000);
+        })
+        .catch((err) => {
+          console.error('❗️ Failed to copy:', err);
+        });
     }
   };
 
@@ -182,7 +273,7 @@ const clipSuccessIcon = document.querySelector('.footer_clipboard-icon.is-copied
     clipSuccessIcon.classList.add('hidden');
   };
 
-  // Add event listeners to the copy wrapper
+  // Add event listeners to the copy wrapper (safe because we checked earlier)
   copyWrapper.addEventListener('click', handleCopy);
   copyWrapper.addEventListener('touchend', handleCopy);
 })();
@@ -195,24 +286,28 @@ window.addEventListener('scroll', function () {
   const blurComponent = document.querySelector('.blur-component');
   const footer = document.querySelector('.footer');
 
+  if (!blurComponent || !footer) {
+    return; // Exit early if either element is missing
+  }
+
   const footerRect = footer.getBoundingClientRect();
 
   if (footerRect.top < window.innerHeight) {
     blurComponent.style.opacity = '0';
     blurComponent.style.pointerEvents = 'none'; // Prevent interactions
 
-    // Wait for the opacity transition before setting display: none
     setTimeout(() => {
-      if (footerRect.top < window.innerHeight) {
-        // Double-check to avoid flickering
+      // Double-check again to avoid flickering if scrolling fast
+      const footerRectCheck = footer.getBoundingClientRect();
+      if (footerRectCheck.top < window.innerHeight) {
         blurComponent.style.display = 'none';
       }
-    }, 300); // Adjust timing based on your CSS transition duration
+    }, 300);
   } else {
     blurComponent.style.display = 'block'; // Restore display when scrolling up
     setTimeout(() => {
       blurComponent.style.opacity = '1';
       blurComponent.style.pointerEvents = 'auto';
-    }, 10); // Small delay to ensure display is set first
+    }, 10);
   }
 });
