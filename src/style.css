@@ -77,28 +77,6 @@ html {
   background: linear-gradient(to bottom, #b2d9ff, #66b3ff);
 }
 
-.button-primary::before {
-  content: '';
-  position: absolute;
-
-  inset: -2px;
-  z-index: -1;
-  border-radius: inherit;
-
-  background: linear-gradient(to bottom, #b2d9ff, #3776d4);
-}
-
-.button.is-pricing::before {
-  content: '';
-  position: absolute;
-
-  inset: -2px;
-  z-index: -1;
-  border-radius: inherit;
-
-  background: linear-gradient(to bottom, #b2d9ff, #3776d4);
-}
-
 .navbar-wrapper::before {
   content: '';
   position: absolute;
@@ -150,27 +128,6 @@ html {
     98px 188px 59px #2759b000;
 }
 
-.headline_gradient-dark.is-pricing-highlight::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.3) rotate(-3deg);
-  width: 89%;
-  height: 81%;
-  border-radius: 12px;
-  background: url('https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d051e7c7c12f53235142df_is-pricing-highlight.svg')
-    center center / contain no-repeat;
-
-  pointer-events: none;
-  box-shadow:
-    4px 8px 19px #2759b01a,
-    16px 30px 34px #2759b017,
-    35px 68px 46px #2759b00d,
-    63px 120px 54px #2759b003,
-    98px 188px 59px #2759b000;
-}
-
 .headline_gradient-dark.is-video-highlight::before {
   content: '';
   position: absolute;
@@ -191,29 +148,3 @@ html {
     63px 120px 54px #2759b003,
     98px 188px 59px #2759b000;
 }
-
-/* .heading-mark-1::before {
-  content: '';
-  position: absolute;
-  top: 33%;
-  left: 95%;
-  transform: translate(-50%, -50%) scale(0.32);
-  width: 100%;
-  height: 100%;
-  background: url('https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67c8b632431ff4c60b356f8c_heading-mark.svg')
-    center / contain no-repeat;
-  pointer-events: none;
-}
-
-.heading-mark-2::before {
-  content: '';
-  position: absolute;
-  top: 33%;
-  left: 92%;
-  transform: translate(-50%, -50%) scale(0.32);
-  width: 100%;
-  height: 100%;
-  background: url('https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67c8b632431ff4c60b356f8c_heading-mark.svg')
-    center / contain no-repeat;
-  pointer-events: none;
-} */
