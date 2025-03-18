@@ -1,82 +1,3 @@
-/* :root {
-
-  --h-size--h1: 4.5rem;
-  --h-size--h2: 3.5rem;
-  --h-size--h3: 3rem;
-  --h-size--h4: 2.5rem;
-  --h-size--h5: 2rem;
-  --h-size--h6: 1.75rem;
-
-  --text-size-large: 1.5rem;
-  --text-size-medium: 1.25rem;
-  --text-size-regular: 1rem;
-  --text-size-small: 0.875rem;
-  --text-size-tiny: 0.75rem;
-
-
-  --h1-line-height: 1.28;
-  --h2-line-height: 1.29;
-  --h3-line-height: 1.33;
-  --h4-line-height: 1.3;
-  --h5-line-height: 1.25;
-  --h6-line-height: 1.29;
-
-  --text-line-height-large: 1.33;
-  --text-line-height-medium: 1.4;
-  --text-line-height-regular: 1.5;
-  --text-line-height-small: 1.43;
-  --text-line-height-tiny: 1.33;
-}
-*/
-/* :root {
-  --font-size-mobile: 0.875;
-
-  --font-size-tablet: 0.875;
-
-  --font-size-laptop: 1;
-
-  --font-size-desktop: 1;
-}
-
-html {
-  font-size: calc(var(--font-size-desktop) * 1rem);
-}
-@media screen and (max-width: 1920px) {
-  html {
-    font-size: calc(var(--font-size-desktop) * 1rem);
-  }
-}
-@media screen and (max-width: 1440px) {
-  html {
-    font-size: calc(var(--font-size-laptop) * 1rem);
-  }
-}
-@media screen and (max-width: 768px) {
-  html {
-    font-size: calc(var(--font-size-tablet) * 1rem);
-  }
-}
-@media screen and (max-width: 479px) {
-  :root {
-    --h2-size: 3rem;
-    --h2-line-height: 1.33;
-  }
-  html {
-    font-size: calc(var(--font-size-mobile) * 1rem);
-  }
-} */
-
-.hero_badge::before {
-  content: '';
-  position: absolute;
-
-  inset: -1px;
-  z-index: -1;
-  border-radius: inherit;
-
-  background: linear-gradient(to bottom, #b2d9ff, #66b3ff);
-}
-
 .navbar-wrapper::before {
   content: '';
   position: absolute;
@@ -93,19 +14,6 @@ html {
   backdrop-filter: blur(2px);
   mask-image: linear-gradient(180deg, #0000 0%, #000 30%);
 }
-
-/* .plan_step-3-container {
-  will-change: clip-path;
-}
-
-.step-3-illustration {
-  will-change: transform, clip-path;
-}
-
-.step-3-illustration .is-analytics,
-.step-3-illustration .is-page-speed {
-  will-change: transform, clip-path;
-} */
 
 .plan_highlight::before {
   content: '';
