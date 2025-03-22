@@ -1,13 +1,8 @@
 'use strict';
 
-// import './style.css';
-
 import { Alignment, EventType, Fit, Layout, Rive } from '@rive-app/webgl2';
-// ==============================
-// ? RIVE
-// ==============================
 
-// Add more configurations here for future animations
+// Animation configurations
 const animationsConfig = [
   {
     id: 'benefit-1',
@@ -16,7 +11,6 @@ const animationsConfig = [
     stateMachine: 'state-machine-1',
     hoverInputNames: ['card_hover'],
     cursorOnHover: 'pointer',
-    cursorOnExit: 'default',
   },
   {
     id: 'benefit-2',
@@ -25,8 +19,7 @@ const animationsConfig = [
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hoverSecurity', 'hoverPerformance'],
     cursorOnHover: 'pointer',
-    cursorOnExit: 'default',
-    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+    onRiveEvent: handleBenefit2Event,
   },
   {
     id: 'benefit-3',
@@ -35,8 +28,7 @@ const animationsConfig = [
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hover'],
     cursorOnHover: 'pointer',
-    cursorOnExit: 'default',
-    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+    onRiveEvent: handleBenefit2Event,
   },
   {
     id: 'benefit-4',
@@ -45,8 +37,7 @@ const animationsConfig = [
     stateMachine: 'state-machine-1',
     hoverInputNames: ['cardHovered'],
     cursorOnHover: 'grab',
-    cursorOnExit: 'default',
-    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+    onRiveEvent: handleBenefit2Event,
   },
   {
     id: 'benefit-5',
@@ -55,41 +46,43 @@ const animationsConfig = [
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hoverIcon'],
     cursorOnHover: 'pointer',
-    cursorOnExit: 'default',
-    onRiveEvent: handleBenefit2Event, // 🔥 Custom event handler for this animation
+    onRiveEvent: handleBenefit2Event,
   },
   {
     id: 'core-logo',
     src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d31daf1c277d5cc3d641c9_core-logo-v6.riv',
     artboard: 'core-logo',
     stateMachine: 'state-machine-1',
-    hoverInputNames: ['cardHovered'], // Optional hover detection (if needed)
+    hoverInputNames: ['cardHovered'],
     cursorOnHover: 'grab',
-    cursorOnExit: 'default',
     autoplay: true,
   },
-  // Add more configs here 👇
-  // {
-  //   id: 'benefit-4',
-  //   src: '...',
-  //   ...
-  // }
 ];
 
-// Store all Rive instances for access later (events, triggers, etc.)
 const riveInstances = {};
 
-// ==============================
-// ? INIT ALL ANIMATIONS
-// ==============================
+// Intersection Observer to lazy load animations
+window.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const config = animationsConfig.find((a) => a.id === entry.target.id);
+          if (config && !riveInstances[config.id]) {
+            initRiveAnimation(config);
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: '0px 0px 100px 0px', threshold: 0.1 }
+  );
 
-animationsConfig.forEach((config) => {
-  initRiveAnimation(config);
+  animationsConfig.forEach(({ id }) => {
+    const canvas = document.getElementById(id);
+    if (canvas) observer.observe(canvas);
+  });
 });
-
-// ==============================
-// ? HANDLE WINDOW RESIZE FOR ALL
-// ==============================
 
 window.addEventListener('resize', () => {
   Object.values(riveInstances).forEach((instance) => {
@@ -97,33 +90,21 @@ window.addEventListener('resize', () => {
   });
 });
 
-// ==============================
-// ? REUSABLE INIT FUNCTION
-// ==============================
-
 function initRiveAnimation({
   id,
   src,
   artboard,
   stateMachine,
   hoverInputNames = [],
-  cursorOnHover = 'pointer',
+  cursorOnHover,
   cursorOnExit = 'default',
   autoplay = true,
-  isTouchScrollEnabled = true,
-  onRiveEvent = null, // Optional: custom event handler
+  onRiveEvent = null,
 }) {
   const canvas = document.getElementById(id);
+  if (!canvas) return;
 
-  if (!canvas) {
-    // console.warn(`❗️ No canvas element found with id: ${id}`);
-    return;
-  }
-
-  const layout = new Layout({
-    fit: Fit.Contain,
-    alignment: Alignment.Center,
-  });
+  const layout = new Layout({ fit: Fit.Contain, alignment: Alignment.Center });
 
   const riveInstance = new Rive({
     canvas,
@@ -132,15 +113,10 @@ function initRiveAnimation({
     stateMachines: stateMachine,
     layout,
     autoplay,
-    isTouchScrollEnabled: true,
     automaticallyHandleEvents: true,
-
     onLoad: () => {
       riveInstance.resizeDrawingSurfaceToCanvas();
-      // console.log(`✅ ${id} loaded!`);
-
-      // Hover handling (if hover inputs are provided)
-      if (hoverInputNames.length > 0) {
+      if (hoverInputNames.length) {
         handleHoverInputs({
           riveInstance,
           canvasElement: canvas,
@@ -153,163 +129,39 @@ function initRiveAnimation({
     },
   });
 
-  // Handle Rive events (if an event handler is provided)
-  if (onRiveEvent) {
-    riveInstance.on(EventType.RiveEvent, onRiveEvent);
-  }
+  if (onRiveEvent) riveInstance.on(EventType.RiveEvent, onRiveEvent);
 
-  // Save the instance for later use (event triggers, resizing, etc.)
   riveInstances[id] = riveInstance;
 }
-
-// ==============================
-// ? HOVER HANDLER FUNCTION
-// ==============================
 
 function handleHoverInputs({
   riveInstance,
   canvasElement,
   stateMachine,
-  hoverInputNames = [],
-  cursorOnHover = 'pointer',
-  cursorOnExit = 'default',
+  hoverInputNames,
+  cursorOnHover,
+  cursorOnExit,
 }) {
   const inputs = riveInstance.stateMachineInputs(stateMachine);
-
   const hoverInputs = hoverInputNames
     .map((name) => inputs.find((input) => input.name === name))
     .filter(Boolean);
 
-  if (hoverInputs.length === 0) {
-    // console.warn(`❗️ No hover inputs found for ${canvasElement.id}`);
-    return;
-  }
-
-  const checkHoverState = () => {
-    const isHovering = hoverInputs.some((input) => input.value === true);
+  function checkHoverState() {
+    const isHovering = hoverInputs.some((input) => input.value);
     canvasElement.style.cursor = isHovering ? cursorOnHover : cursorOnExit;
-
     requestAnimationFrame(checkHoverState);
-  };
+  }
 
   checkHoverState();
 }
 
-// ==============================
-// ? CUSTOM EVENT HANDLER: BENEFIT-2
-// ==============================
-
 function handleBenefit2Event(riveEvent) {
-  const eventName = riveEvent.data.name;
-  const { properties } = riveEvent.data;
-
-  // console.log(`🔥 Event received from benefit-2: ${eventName}`, properties);
-
-  if (eventName === 'securityComplete' || eventName === 'iconPerformanceComplete') {
-    // console.log('✅ Event matched, triggering core-logo animation');
-
-    const coreLogoInstance = riveInstances['core-logo'];
-
-    if (!coreLogoInstance) {
-      // console.warn('❗️ core-logo instance not found');
-      return;
-    }
-
-    const coreInputs = coreLogoInstance.stateMachineInputs('state-machine-1');
-    const triggerInput = coreInputs.find((input) => input.name === 'startAnimation');
-
-    if (triggerInput) {
-      triggerInput.fire();
-      // console.log('✅ Fired "startAnimation" trigger on core-logo!');
-    } else {
-      // console.warn('❗️ No trigger input named "startAnimation" found on core-logo');
-    }
+  if (['securityComplete', 'iconPerformanceComplete'].includes(riveEvent.data.name)) {
+    const coreLogo = riveInstances['core-logo'];
+    const triggerInput = coreLogo
+      ?.stateMachineInputs('state-machine-1')
+      .find((input) => input.name === 'startAnimation');
+    if (triggerInput) triggerInput.fire();
   }
 }
-
-// ==============================
-// ? COPY TO CLIPBOARD
-// ==============================
-
-const copyText = document.querySelector('.footer_link-wrapper .footer_address .text-size-medium');
-const buttonState = document.querySelector('.footer_copy-wrapper .text-size-regular');
-const copyWrapper = document.querySelector('.footer_copy-wrapper');
-const clipDefaultIcon = document.querySelector('.footer_clipboard-icon.is-default');
-const clipSuccessIcon = document.querySelector('.footer_clipboard-icon.is-copied');
-
-(function () {
-  if (!copyText || !buttonState || !copyWrapper || !clipDefaultIcon || !clipSuccessIcon) {
-    return; // Exit if any element is missing
-  }
-
-  // Function to handle the copy action
-  const handleCopy = (e) => {
-    e.preventDefault();
-    const text = copyText.textContent;
-    if (text !== null) {
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          updateUIOnCopy();
-          setTimeout(resetUI, 10000);
-        })
-        .catch((err) => {
-          console.error('❗️ Failed to copy:', err);
-        });
-    }
-  };
-
-  // Function to update the UI when text is copied
-  const updateUIOnCopy = () => {
-    buttonState.textContent = `Successfully copied!`;
-    copyWrapper.classList.add('copied');
-    clipDefaultIcon.classList.add('hidden');
-    clipSuccessIcon.classList.remove('hidden');
-  };
-
-  // Function to reset the UI after a delay
-  const resetUI = () => {
-    buttonState.textContent = `Copy address`;
-    copyWrapper.classList.remove('copied');
-    clipDefaultIcon.classList.remove('hidden');
-    clipSuccessIcon.classList.add('hidden');
-  };
-
-  // Add event listeners to the copy wrapper (safe because we checked earlier)
-  copyWrapper.addEventListener('click', handleCopy);
-  copyWrapper.addEventListener('touchend', handleCopy);
-})();
-
-// ==============================
-// ? BLUR HIDE
-// ==============================
-
-window.addEventListener('scroll', function () {
-  const blurComponent = document.querySelector('.blur-component');
-  const footer = document.querySelector('.footer');
-
-  if (!blurComponent || !footer) {
-    return; // Exit early if either element is missing
-  }
-
-  const footerRect = footer.getBoundingClientRect();
-
-  if (footerRect.top < window.innerHeight) {
-    blurComponent.style.opacity = '0';
-    blurComponent.style.pointerEvents = 'none'; // Prevent interactions
-
-    setTimeout(() => {
-      // Double-check again to avoid flickering if scrolling fast
-      const footerRectCheck = footer.getBoundingClientRect();
-      if (footerRectCheck.top < window.innerHeight) {
-        blurComponent.style.display = 'none';
-      }
-    }, 300);
-  } else {
-    blurComponent.style.display = 'block'; // Restore display when scrolling up
-    setTimeout(() => {
-      blurComponent.style.opacity = '1';
-      blurComponent.style.pointerEvents = 'auto';
-    }, 10);
-  }
-});
