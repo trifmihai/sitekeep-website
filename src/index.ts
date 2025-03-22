@@ -1,8 +1,8 @@
 'use strict';
 
-import './style.css';
+// import './style.css';
 
-import { Alignment, EventType, Fit, Layout, Rive, RiveEventType } from '@rive-app/webgl2';
+import { Alignment, EventType, Fit, Layout, Rive } from '@rive-app/webgl2';
 // ==============================
 // ? RIVE
 // ==============================
