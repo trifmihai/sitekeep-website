@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       });
     },
-    { rootMargin: '0px 0px 100px 0px', threshold: 0.1 }
+    { rootMargin: '0px 0px 600px 0px', threshold: 0.01 }
   );
 
   animationsConfig.forEach(({ id }) => {
