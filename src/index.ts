@@ -6,7 +6,7 @@ import { Alignment, EventType, Fit, Layout, Rive } from '@rive-app/webgl2';
 const animationsConfig = [
   {
     id: 'benefit-1',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d1a1922f51259652e546c8_1-benefit-v11.riv',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e17ee80859e933a42d83f0_1-benefit-hover-v13.riv',
     artboard: 'benefit-1',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['card_hover'],
@@ -14,7 +14,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-2',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d4232fa1b8c8d4802d6882_2-benefit-v11.riv',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e1679dc7641658199fc374_2-benefit-hover-v12.riv',
     artboard: 'benefit-2',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hoverSecurity', 'hoverPerformance'],
@@ -23,7 +23,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-3',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d62616bf79b5d0a4464dd8_3-benefit-v4.riv',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e163d361a1037bd531caad_3-benefit-hover-v5.riv',
     artboard: 'benefit-3',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hover'],
@@ -32,7 +32,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-4',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d6204c83c0ed0c6c3ee7a3_4-benefit-v3.riv',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e156f3b9ac3af412b8c0ca_4-benefit-v6.riv',
     artboard: 'benefit-4',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['cardHovered'],
@@ -41,7 +41,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-5',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d6232dae483e2d92b662fc_5-benefit-v3.riv',
+    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e15cef3fabb802fc34997a_5-benefit-hover-v6.riv',
     artboard: 'benefit-5',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hoverIcon'],
