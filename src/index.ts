@@ -6,7 +6,7 @@ import { Alignment, EventType, Fit, Layout, Rive } from '@rive-app/webgl2';
 const animationsConfig = [
   {
     id: 'benefit-1',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e17ee80859e933a42d83f0_1-benefit-hover-v13.riv',
+    src: 'https://cdn.prod.website-files.com/64efc1d0232db54f18991fb1/67e36d9d552122910cd06178_1-benefit-hover-v13.riv',
     artboard: 'benefit-1',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['card_hover'],
@@ -14,7 +14,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-2',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e1679dc7641658199fc374_2-benefit-hover-v12.riv',
+    src: 'https://cdn.prod.website-files.com/64efc1d0232db54f18991fb1/67e34b4ea69562ad972c179a_2-benefit-hover-v13.riv',
     artboard: 'benefit-2',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hoverSecurity', 'hoverPerformance'],
@@ -23,7 +23,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-3',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e163d361a1037bd531caad_3-benefit-hover-v5.riv',
+    src: 'https://cdn.prod.website-files.com/64efc1d0232db54f18991fb1/67e36da30fd47e238f9f4c50_3-benefit-hover-v5.riv',
     artboard: 'benefit-3',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hover'],
@@ -32,7 +32,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-4',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e156f3b9ac3af412b8c0ca_4-benefit-v6.riv',
+    src: 'https://cdn.prod.website-files.com/64efc1d0232db54f18991fb1/67e36dabf07624c041b6ca00_4-benefit-hover-v6.riv',
     artboard: 'benefit-4',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['cardHovered'],
@@ -41,7 +41,7 @@ const animationsConfig = [
   },
   {
     id: 'benefit-5',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67e15cef3fabb802fc34997a_5-benefit-hover-v6.riv',
+    src: 'https://cdn.prod.website-files.com/64efc1d0232db54f18991fb1/67e36db220c9c3469f14430e_5-benefit-hover-v6.riv',
     artboard: 'benefit-5',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['hoverIcon'],
@@ -50,7 +50,7 @@ const animationsConfig = [
   },
   {
     id: 'core-logo',
-    src: 'https://cdn.prod.website-files.com/67bd796453b2d1478e028672/67d31daf1c277d5cc3d641c9_core-logo-v6.riv',
+    src: 'https://cdn.prod.website-files.com/64efc1d0232db54f18991fb1/67e36dbc6a5df7cfedd92d23_core-logo-v6.riv',
     artboard: 'core-logo',
     stateMachine: 'state-machine-1',
     hoverInputNames: ['cardHovered'],
