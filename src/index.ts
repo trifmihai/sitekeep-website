@@ -11,6 +11,7 @@ const animationsConfig = [
     stateMachine: 'state-machine-1',
     hoverInputNames: ['card_hover'],
     cursorOnHover: 'pointer',
+    isTouchScrollEnabled: true,
   },
   {
     id: 'benefit-2',
@@ -20,6 +21,7 @@ const animationsConfig = [
     hoverInputNames: ['hoverSecurity', 'hoverPerformance'],
     cursorOnHover: 'pointer',
     onRiveEvent: handleBenefit2Event,
+    isTouchScrollEnabled: true,
   },
   {
     id: 'benefit-3',
@@ -29,6 +31,7 @@ const animationsConfig = [
     hoverInputNames: ['hover'],
     cursorOnHover: 'pointer',
     onRiveEvent: handleBenefit2Event,
+    isTouchScrollEnabled: true,
   },
   {
     id: 'benefit-4',
@@ -38,6 +41,7 @@ const animationsConfig = [
     hoverInputNames: ['cardHovered'],
     cursorOnHover: 'grab',
     onRiveEvent: handleBenefit2Event,
+    isTouchScrollEnabled: true,
   },
   {
     id: 'benefit-5',
@@ -47,6 +51,7 @@ const animationsConfig = [
     hoverInputNames: ['hoverIcon'],
     cursorOnHover: 'pointer',
     onRiveEvent: handleBenefit2Event,
+    isTouchScrollEnabled: true,
   },
   {
     id: 'core-logo',
@@ -56,6 +61,7 @@ const animationsConfig = [
     hoverInputNames: ['cardHovered'],
     cursorOnHover: 'grab',
     autoplay: true,
+    isTouchScrollEnabled: true,
   },
 ];
 
@@ -113,6 +119,7 @@ function initRiveAnimation({
     stateMachines: stateMachine,
     layout,
     autoplay,
+    isTouchScrollEnabled: true,
     automaticallyHandleEvents: true,
     onLoad: () => {
       riveInstance.resizeDrawingSurfaceToCanvas();
